@@ -1,0 +1,1 @@
+print("it’s not possible to add items directly to a tuple in Python because tuples are immutable if you want to add integers you need to create a new tuple that combines the old tuple and the new values")
