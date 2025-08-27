@@ -1,35 +1,41 @@
--- Insert items
-INSERT INTO items("ID", "Name", "Price")
-VALUES
-(1, 'Small Desk', 100),
-(2, 'Large Desk', 300),
-(3, 'Fan', 80);
+CREATE DATABASE public;
+CREATE TABLE items (
+id SERIAL PRIMARY KEY,
+name varchar(20),
+price decimal
+);
+CREATE TABLE customers (
+id SERIAL PRIMARY KEY,
+first_name varchar(20),
+last_name varchar(30)
+);
+insert into items( name, price)
+values
+('Small Desk','100'),
+('Large desk','300'),
+('Fan','80');
+select * from items;
 
--- See all items
-SELECT * FROM items;
+select * from items
+where price > 80;
 
-SELECT * FROM items
-WHERE "Price" < 300;
+select * from items
+where price <= 300;
 
-SELECT * FROM items
-WHERE "Price" > 80;
+insert into customers(first_name, last_name)
+values
+('Greg', 'Jones'),
+('Sandra', 'Jones'),
+('Scott', 'Scott'),
+('Trevor', 'Green'),
+('Melanie', 'Johnson');
+select * from customers;
 
+select * from customers
+where first_name = 'Smith'; --nothing will apear
 
+select * from customers
+where last_name = 'Jones';
 
-INSERT INTO customers("ID", "FirstName", "LastName")
-VALUES
-(1, 'Greg', 'Jones'),
-(2, 'Sandra', 'Jones'),
-(3, 'Scott', 'Scott'),
-(4, 'Trevor', 'Green'),
-(5, 'Melanie', 'Johnson');
-
-SELECT * FROM customers
-WHERE "FirstName" != 'Scott';
-
-
-SELECT * FROM customers
-WHERE "LastName" = 'Jones';
-
-SELECT * FROM customers
-WHERE "LastName" = 'Smith';
+select * from customers
+where first_name != 'Scott'; 

@@ -1,7 +1,8 @@
+create database bootcamp;
 CREATE TABLE students (
     id SERIAL PRIMARY KEY,
-    first_name text,
-    last_name text,
+    first_name varchar(20),
+    last_name varchar(20),
     birth_date date
 );
 
