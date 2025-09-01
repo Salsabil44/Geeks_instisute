@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Add Course - School Management System{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <!-- Page Header -->
+    <div class="mb-8">
+        <div class="flex items-center space-x-2 mb-2">
+            <a href="{{ url_for('courses_list') }}" class="text-blue-500 hover:text-blue-600">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </a>
+            <span class="text-gray-400">/</span>
+            <span class="text-gray-600">Courses</span>
+            <span class="text-gray-400">/</span>
+            <span class="text-gray-900 font-medium">Add New</span>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-900">Add New Course</h1>
+        <p class="text-gray-600">Enter the course information below</p>
+    </div>
+
+    <!-- Course Form -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <form method="POST" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Course Code -->
+                <div>
+                    <label for="course_code" class="block text-sm font-medium text-gray-700 mb-2">Course Code *</label>
+                    <input type="text" id="course_code" name="course_code" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                           placeholder="e.g., MATH101">
+                    <p class="mt-1 text-sm text-gray-500">Unique identifier for the course</p>
+                </div>
+
+                <!-- Course Name -->
+                <div>
+                    <label for="course_name" class="block text-sm font-medium text-gray-700 mb-2">Course Name *</label>
+                    <input type="text" id="course_name" name="course_name" required
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                           placeholder="e.g., Algebra I">
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div>
+                <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                <textarea id="description" name="description" rows="3"
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                          placeholder="Brief description of the course content and objectives"></textarea>
+                <p class="mt-1 text-sm text-gray-500">Optional description of what students will learn</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Credits -->
+                <div>
+                    <label for="credits" class="block text-sm font-medium text-gray-700 mb-2">Credits</label>
+                    <input type="number" id="credits" name="credits" min="1" max="6" value="1"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
+                    <p class="mt-1 text-sm text-gray-500">Number of credit hours</p>
+                </div>
+
+                <!-- Max Students -->
+                <div>
+                    <label for="max_students" class="block text-sm font-medium text-gray-700 mb-2">Max Students</label>
+                    <input type="number" id="max_students" name="max_students" min="1" max="100" value="30"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
+                    <p class="mt-1 text-sm text-gray-500">Maximum enrollment capacity</p>
+                </div>
+
+                <!-- Teacher -->
+                <div>
+                    <label for="teacher_id" class="block text-sm font-medium text-gray-700 mb-2">Assigned Teacher</label>
+                    <select id="teacher_id" name="teacher_id"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
+                        <option value="">Select Teacher (Optional)</option>
+                        {% for teacher in teachers %}
+                        <option value="{{ teacher.id }}">{{ teacher.full_name }} - {{ teacher.subject_specialty or 'No specialty' }}</option>
+                        {% endfor %}
+                    </select>
+                    <p class="mt-1 text-sm text-gray-500">Teacher who will instruct this course</p>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+                <a href="{{ url_for('courses_list') }}" 
+                   class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                    Cancel
+                </a>
+                <button type="submit" 
+                        class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                    Create Course
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Help Section -->
+    <div class="bg-purple-50 rounded-lg p-4 mt-6">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <div class="ml-3">
+                <h3 class="text-sm font-medium text-purple-800">Tips for adding courses</h3>
+                <div class="mt-2 text-sm text-purple-700">
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Course code should be unique and follow your school's naming convention</li>
+                        <li>Credits typically range from 1-6 depending on course intensity</li>
+                        <li>Max students should consider classroom capacity and teaching effectiveness</li>
+                        <li>Teacher assignment is optional but recommended for better organization</li>
+                        <li>Description helps students understand course content and expectations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

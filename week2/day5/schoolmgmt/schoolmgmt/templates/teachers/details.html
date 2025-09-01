@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}{{ teacher.full_name }} - School Management System{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Page Header -->
+    <div class="flex justify-between items-start">
+        <div>
+            <div class="flex items-center space-x-2 mb-2">
+                <a href="{{ url_for('teachers_list') }}" class="text-blue-500 hover:text-blue-600">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </a>
+                <span class="text-gray-400">/</span>
+                <span class="text-gray-600">Teachers</span>
+                <span class="text-gray-400">/</span>
+                <span class="text-gray-900 font-medium">{{ teacher.full_name }}</span>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-900">{{ teacher.full_name }}</h1>
+            <p class="text-gray-600">Teacher ID: {{ teacher.teacher_id }}</p>
+        </div>
+        <div class="flex space-x-3">
+            <a href="{{ url_for('teacher_edit', id=teacher.id) }}" class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition-colors">
+                Edit Teacher
+            </a>
+        </div>
+    </div>
+
+    <!-- Teacher Information -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Basic Info -->
+        <div class="lg:col-span-2">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Teacher Information</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">Full Name</label>
+                        <p class="text-gray-900">{{ teacher.full_name }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">Teacher ID</label>
+                        <p class="text-gray-900">{{ teacher.teacher_id }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">Email</label>
+                        <p class="text-gray-900">{{ teacher.email }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">Subject Specialty</label>
+                        <p class="text-gray-900">
+                            {% if teacher.subject_specialty %}
+                                {{ teacher.subject_specialty }}
+                            {% else %}
+                                Not specified
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">Hire Date</label>
+                        <p class="text-gray-900">
+                            {% if teacher.hire_date %}
+                                {{ teacher.hire_date.strftime('%B %d, %Y') }}
+                            {% else %}
+                                Not specified
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">Status</label>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {% if teacher.status == 'active' %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                            {{ teacher.status|title }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="lg:col-span-1">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Quick Stats</h2>
+                <div class="space-y-4">
+                    <div class="text-center p-4 bg-green-50 rounded-lg">
+                        <p class="text-2xl font-bold text-green-600">{{ courses|length }}</p>
+                        <p class="text-sm text-green-800">Courses Teaching</p>
+                    </div>
+                    <div class="text-center p-4 bg-blue-50 rounded-lg">
+                        <p class="text-2xl font-bold text-blue-600">
+                            {% set total_students = courses|map(attribute='enrollments')|map('length')|sum %}
+                            {{ total_students }}
+                        </p>
+                        <p class="text-sm text-blue-800">Total Students</p>
+                    </div>
+                    <div class="text-center p-4 bg-purple-50 rounded-lg">
+                        <p class="text-2xl font-bold text-purple-600">
+                            {% if courses %}
+                                {{ "%.1f"|format(courses|map(attribute='credits')|sum) }}
+                            {% else %}
+                                0
+                            {% endif %}
+                        </p>
+                        <p class="text-sm text-purple-800">Total Credits</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Courses Teaching -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">Courses Teaching</h2>
+        {% if courses %}
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Credits</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Enrollment</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Capacity</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for course in courses %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div>
+                                <div class="text-sm font-medium text-gray-900">{{ course.course_name }}</div>
+                                <div class="text-sm text-gray-500">{{ course.course_code }}</div>
+                                {% if course.description %}
+                                <div class="text-sm text-gray-500 mt-1">{{ course.description[:100] }}{% if course.description|length > 100 %}...{% endif %}</div>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ course.credits }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <span class="text-sm text-gray-900">{{ course.current_enrollment }}</span>
+                                <div class="ml-2 flex-1 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-blue-600 h-2 rounded-full" style="width: {{ (course.current_enrollment / course.max_students * 100)|round }}%"></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
+                                {% if course.available_spots > 0 %}bg-green-100 text-green-800{% elif course.available_spots == 0 %}bg-yellow-100 text-yellow-800{% else %}bg-red-100 text-red-800{% endif %}">
+                                {{ course.max_students }} max
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <a href="{{ url_for('course_details', id=course.id) }}" class="text-blue-600 hover:text-blue-900">View Course</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-8">
+            <div class="text-gray-400 mb-4">
+                <svg class="mx-auto h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">No courses assigned</h3>
+            <p class="text-gray-500">This teacher is not currently assigned to any courses.</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Performance Summary -->
+    {% if courses %}
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">Teaching Summary</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="text-center p-4 bg-blue-50 rounded-lg">
+                <p class="text-2xl font-bold text-blue-600">{{ courses|length }}</p>
+                <p class="text-sm text-blue-800">Active Courses</p>
+            </div>
+            <div class="text-center p-4 bg-green-50 rounded-lg">
+                <p class="text-2xl font-bold text-green-600">
+                    {% set total_enrollment = courses|map(attribute='enrollments')|map('length')|sum %}
+                    {{ total_enrollment }}
+                </p>
+                <p class="text-sm text-green-800">Total Students</p>
+            </div>
+            <div class="text-center p-4 bg-purple-50 rounded-lg">
+                <p class="text-2xl font-bold text-purple-600">
+                    {% set avg_class_size = total_enrollment / courses|length if courses else 0 %}
+                    {{ "%.1f"|format(avg_class_size) }}
+                </p>
+                <p class="text-sm text-purple-800">Avg Class Size</p>
+            </div>
+            <div class="text-center p-4 bg-yellow-50 rounded-lg">
+                <p class="text-2xl font-bold text-yellow-600">
+                    {% set total_credits = courses|map(attribute='credits')|sum %}
+                    {{ total_credits }}
+                </p>
+                <p class="text-sm text-yellow-800">Total Credits</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

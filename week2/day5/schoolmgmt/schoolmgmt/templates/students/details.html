@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+
+{% block title %}{{ student.full_name }} - School Management System{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Page Header -->
+    <div class="flex justify-between items-start">
+        <div>
+            <div class="flex items-center space-x-2 mb-2">
+                <a href="{{ url_for('students_list') }}" class="text-blue-500 hover:text-blue-600">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </a>
+                <span class="text-gray-400">/</span>
+                <span class="text-gray-600">Students</span>
+                <span class="text-gray-400">/</span>
+                <span class="text-gray-900 font-medium">{{ student.full_name }}</span>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-900">{{ student.full_name }}</h1>
+            <p class="text-gray-600">Student ID: {{ student.student_id }}</p>
+        </div>
+        <div class="flex space-x-3">
+            <a href="{{ url_for('student_edit', id=student.id) }}" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition-colors">
+                Edit Student
+            </a>
+        </div>
+    </div>
+
+    <!-- Student Information -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Basic Info -->
+        <div class="lg:col-span-2">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Student Information</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">Full Name</label>
+                        <p class="text-gray-900">{{ student.full_name }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">Student ID</label>
+                        <p class="text-gray-900">{{ student.student_id }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">Email</label>
+                        <p class="text-gray-900">{{ student.email }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">Grade Level</label>
+                        <p class="text-gray-900">
+                            {% if student.grade_level %}
+                                Grade {{ student.grade_level }}
+                            {% else %}
+                                Not specified
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">Date of Birth</label>
+                        <p class="text-gray-900">
+                            {% if student.date_of_birth %}
+                                {{ student.date_of_birth.strftime('%B %d, %Y') }}
+                            {% else %}
+                                Not specified
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">Enrollment Date</label>
+                        <p class="text-gray-900">
+                            {% if student.enrollment_date %}
+                                {{ student.enrollment_date.strftime('%B %d, %Y') }}
+                            {% else %}
+                                Not specified
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-500">Status</label>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {% if student.status == 'active' %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                            {{ student.status|title }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="lg:col-span-1">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Quick Stats</h2>
+                <div class="space-y-4">
+                    <div class="text-center p-4 bg-blue-50 rounded-lg">
+                        <p class="text-2xl font-bold text-blue-600">{{ enrollments|length }}</p>
+                        <p class="text-sm text-blue-800">Courses Enrolled</p>
+                    </div>
+                    <div class="text-center p-4 bg-green-50 rounded-lg">
+                        <p class="text-2xl font-bold text-green-600">{{ grades|length }}</p>
+                        <p class="text-sm text-green-800">Grades Recorded</p>
+                    </div>
+                    <div class="text-center p-4 bg-purple-50 rounded-lg">
+                        <p class="text-2xl font-bold text-purple-600">
+                            {% if grades %}
+                                {% set valid_grades = grades|selectattr('grade_value')|list %}
+                                {% if valid_grades %}
+                                    {{ "%.2f"|format(valid_grades|map(attribute='grade_value')|sum / valid_grades|length) }}
+                                {% else %}
+                                    0.00
+                                {% endif %}
+                            {% else %}
+                                0.00
+                            {% endif %}
+                        </p>
+                        <p class="text-sm text-purple-800">Average Grade</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Course Enrollments -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">Course Enrollments</h2>
+        {% if enrollments %}
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Teacher</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Credits</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Enrollment Date</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for enrollment in enrollments %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div>
+                                <div class="text-sm font-medium text-gray-900">{{ enrollment.course.course_name }}</div>
+                                <div class="text-sm text-gray-500">{{ enrollment.course.course_code }}</div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {% if enrollment.course.teacher %}
+                                {{ enrollment.course.teacher.full_name }}
+                            {% else %}
+                                Not assigned
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ enrollment.course.credits }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {{ enrollment.enrollment_date.strftime('%Y-%m-%d') if enrollment.enrollment_date else 'N/A' }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {% if enrollment.status == 'enrolled' %}bg-green-100 text-green-800{% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                                {{ enrollment.status|title }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-8">
+            <div class="text-gray-400 mb-4">
+                <svg class="mx-auto h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">No courses enrolled</h3>
+            <p class="text-gray-500">This student is not currently enrolled in any courses.</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Grades -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">Academic Performance</h2>
+        {% if grades %}
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Grade</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Letter Grade</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Semester</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Academic Year</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for grade in grades %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div>
+                                <div class="text-sm font-medium text-gray-900">{{ grade.course.course_name }}</div>
+                                <div class="text-sm text-gray-500">{{ grade.course.course_code }}</div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {% if grade.grade_value %}
+                                {{ "%.1f"|format(grade.grade_value) }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {% if grade.grade_letter %}
+                                {% set letter = grade.grade_letter %}
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
+                                    {% if letter == 'A' or letter == 'A-' %}bg-green-100 text-green-800
+                                    {% elif letter == 'B' or letter == 'B+' or letter == 'B-' %}bg-blue-100 text-blue-800
+                                    {% elif letter == 'C' or letter == 'C+' or letter == 'C-' %}bg-yellow-100 text-yellow-800
+                                    {% elif letter == 'D' or letter == 'D+' or letter == 'D-' %}bg-orange-100 text-orange-800
+                                    {% else %}bg-red-100 text-red-800{% endif %}">
+                                    {{ grade.grade_letter }}
+                                </span>
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ grade.semester or 'N/A' }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ grade.academic_year or 'N/A' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-8">
+            <div class="text-gray-400 mb-4">
+                <svg class="mx-auto h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">No grades recorded</h3>
+            <p class="text-gray-500">This student doesn't have any grades recorded yet.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

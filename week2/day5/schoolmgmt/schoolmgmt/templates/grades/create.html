@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block title %}Add Grade - School Management System{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <!-- Page Header -->
+    <div class="mb-8">
+        <div class="flex items-center space-x-2 mb-2">
+            <a href="{{ url_for('grades_list') }}" class="text-blue-500 hover:text-blue-600">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </a>
+            <span class="text-gray-400">/</span>
+            <span class="text-gray-600">Grades</span>
+            <span class="text-gray-400">/</span>
+            <span class="text-gray-900 font-medium">Add New</span>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-900">Add New Grade</h1>
+        <p class="text-gray-600">Record a student's grade for a specific course</p>
+    </div>
+
+    <!-- Grade Form -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <form method="POST" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Student -->
+                <div>
+                    <label for="student_id" class="block text-sm font-medium text-gray-700 mb-2">Student *</label>
+                    <select id="student_id" name="student_id" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+                        <option value="">Select Student</option>
+                        {% for student in students %}
+                        <option value="{{ student.id }}">{{ student.full_name }} ({{ student.student_id }})</option>
+                        {% endfor %}
+                    </select>
+                    <p class="mt-1 text-sm text-gray-500">Choose the student for this grade</p>
+                </div>
+
+                <!-- Course -->
+                <div>
+                    <label for="course_id" class="block text-sm font-medium text-gray-700 mb-2">Course *</label>
+                    <select id="course_id" name="course_id" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+                        <option value="">Select Course</option>
+                        {% for course in courses %}
+                        <option value="{{ course.id }}">{{ course.course_name }} ({{ course.course_code }})</option>
+                        {% endfor %}
+                    </select>
+                    <p class="mt-1 text-sm text-gray-500">Choose the course for this grade</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Grade Value -->
+                <div>
+                    <label for="grade_value" class="block text-sm font-medium text-gray-700 mb-2">Numeric Grade</label>
+                    <input type="number" id="grade_value" name="grade_value" min="0" max="100" step="0.1"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
+                           placeholder="e.g., 92.5">
+                    <p class="mt-1 text-sm text-gray-500">Grade value from 0-100 (optional)</p>
+                </div>
+
+                <!-- Letter Grade -->
+                <div>
+                    <label for="grade_letter" class="block text-sm font-medium text-gray-700 mb-2">Letter Grade</label>
+                    <select id="grade_letter" name="grade_letter"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+                        <option value="">Select Letter Grade</option>
+                        <option value="A">A (90-100)</option>
+                        <option value="A-">A- (87-89)</option>
+                        <option value="B+">B+ (83-86)</option>
+                        <option value="B">B (80-82)</option>
+                        <option value="B-">B- (77-79)</option>
+                        <option value="C+">C+ (73-76)</option>
+                        <option value="C">C (70-72)</option>
+                        <option value="C-">C- (67-69)</option>
+                        <option value="D+">D+ (63-66)</option>
+                        <option value="D">D (60-62)</option>
+                        <option value="D-">D- (57-59)</option>
+                        <option value="F">F (0-56)</option>
+                    </select>
+                    <p class="mt-1 text-sm text-gray-500">Letter grade equivalent</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Semester -->
+                <div>
+                    <label for="semester" class="block text-sm font-medium text-gray-700 mb-2">Semester</label>
+                    <select id="semester" name="semester"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+                        <option value="">Select Semester</option>
+                        <option value="Fall">Fall</option>
+                        <option value="Spring">Spring</option>
+                        <option value="Summer">Summer</option>
+                        <option value="Winter">Winter</option>
+                    </select>
+                </div>
+
+                <!-- Academic Year -->
+                <div>
+                    <label for="academic_year" class="block text-sm font-medium text-gray-700 mb-2">Academic Year</label>
+                    <input type="number" id="academic_year" name="academic_year" min="2000" max="2030"
+                           value="{{ 2024 }}"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
+                           placeholder="e.g., 2024">
+                </div>
+            </div>
+
+            <!-- Grade Conversion Helper -->
+            <div class="bg-yellow-50 rounded-lg p-4">
+                <h3 class="text-sm font-medium text-yellow-800 mb-2">Grade Conversion Guide</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs text-yellow-700">
+                    <div>A: 90-100</div>
+                    <div>B: 80-89</div>
+                    <div>C: 70-79</div>
+                    <div>D: 60-69</div>
+                    <div>A-: 87-89</div>
+                    <div>B-: 77-79</div>
+                    <div>C-: 67-69</div>
+                    <div>F: 0-59</div>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+                <a href="{{ url_for('grades_list') }}" 
+                   class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                    Cancel
+                </a>
+                <button type="submit" 
+                        class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                    Create Grade
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Help Section -->
+    <div class="bg-yellow-50 rounded-lg p-4 mt-6">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <div class="ml-3">
+                <h3 class="text-sm font-medium text-yellow-800">Tips for adding grades</h3>
+                <div class="mt-2 text-sm text-yellow-700">
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Both numeric and letter grades are optional but recommended</li>
+                        <li>Semester and academic year help organize grades by time period</li>
+                        <li>Ensure the student is enrolled in the selected course</li>
+                        <li>Grades can be updated later if needed</li>
+                        <li>Use the grade conversion guide for consistency</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
