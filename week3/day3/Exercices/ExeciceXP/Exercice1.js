@@ -26,7 +26,7 @@ button.addEventListener("click", () => {
 
 // BONUS: 
 h1.addEventListener("mouseover", () => {
-  const randomSize = Math.floor(Math.random() * 101); // 0 to 100px
+  const randomSize = Math.floor(Math.random() * 101); 
   h1.style.fontSize = `${randomSize}px`;
 });
 
