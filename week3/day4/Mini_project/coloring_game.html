@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coloring Game</title>
+</head>
+<body>
+    <h1>Coloring Game</h1>
+    <div id="palette"></div>
+    <div id="grid"></div>
+
+    <script>
+        const palette = document.getElementById('palette');
+        const grid = document.getElementById('grid');
+
+        const colors = ['black', 'red', 'green', 'blue', 'yellow', 'purple', 'orange', 'white'];
+        let selectedColor = 'black';
+        let mouseDown = false;
+
+        document.body.onmousedown = () => mouseDown = true;
+        document.body.onmouseup = () => mouseDown = false;
+
+        colors.forEach(color => {
+            const c = document.createElement('div');
+            c.style.width = '30px';
+            c.style.height = '30px';
+            c.style.margin = '2px';
+            c.style.display = 'inline-block';
+            c.style.backgroundColor = color;
+            c.style.border = '1px solid #000';
+            
+            if(color === 'black') c.style.border = '3px solid #000';
+            
+            c.addEventListener('click', () => {
+                selectedColor = color;
+                Array.from(palette.children).forEach(p => p.style.border = '1px solid #000');
+                c.style.border = '3px solid #000';
+            });
+
+            palette.appendChild(c);
+        });
+
+        grid.style.display = 'grid';
+        grid.style.gridTemplateColumns = 'repeat(16, 30px)';
+        grid.style.gridTemplateRows = 'repeat(16, 30px)';
+        grid.style.gap = '2px';
+
+        for (let i = 0; i < 16*16; i++) {
+            const square = document.createElement('div');
+            square.style.width = '30px';
+            square.style.height = '30px';
+            square.style.backgroundColor = 'white';
+            square.style.border = '1px solid #ccc';
+
+            square.addEventListener('mousedown', () => square.style.backgroundColor = selectedColor);
+            square.addEventListener('mouseover', () => {
+                if(mouseDown) square.style.backgroundColor = selectedColor;
+            });
+
+            grid.appendChild(square);
+        }
+    </script>
+</body>
+</html>
