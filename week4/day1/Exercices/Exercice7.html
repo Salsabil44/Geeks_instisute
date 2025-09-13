@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navbar Example</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info span {
+            margin-right: 10px;
+        }
+
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">My Website</div>
+        <div id="user-info-container"></div>
+    </nav>
+
+    <script>
+        (function welcomeUser(userName) {
+    const container = document.getElementById('user-info-container');
+
+    container.innerHTML = `
+        <div class="user-info">
+            <span>Welcome, ${userName}</span>
+            <img src="https://via.placeholder.com/40" alt="${userName}'s profile picture">
+        </div>
+    `;
+})('John');
+
+    </script>
+</body>
+</html>

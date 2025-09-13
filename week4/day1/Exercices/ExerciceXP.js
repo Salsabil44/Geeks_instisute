@@ -88,4 +88,37 @@ alert(`outside of the if block ${a}`);
 // with const instead of let ?
 // Same behavior Both are block-scoped Works fine since no reassignment happens.
 
+//Exercice 2:
+const winBattle = () => true;
 
+let experiencePoints = winBattle() ? 10 : 1;
+
+console.log(experiencePoints);
+//Exercice 3:
+const isString = (value) => typeof value === "string";
+
+console.log(isString("hello")); 
+console.log(isString(123));     
+//Exercice 4:
+const sum = (a, b) => a + b;
+
+console.log(sum(3, 4));
+console.log(sum(10, 20)); 
+//Exercice 5:
+//  Function Declaration
+function toGrams(weightKg) {
+  return weightKg * 1000;
+}
+console.log(toGrams(5)); 
+// Function Expression
+const toGramsExpr = function(weightKg) {
+  return weightKg * 1000;
+};
+console.log(toGramsExpr(3)); 
+// Function declaration can be called before it's defined but function expression is not.
+
+// One-line Arrow Function
+const toGramsArrow = weightKg => weightKg * 1000;
+console.log(toGramsArrow(7)); 
+
+//Exercice 7:
