@@ -1,0 +1,197 @@
+[
+  {
+    "name": "FE-Intern-A",
+    "createdAt": "2025-09-14T13:07:59.478592",
+    "candidates": [
+      {
+        "firstName": "Amina",
+        "lastName": "El Idrissi",
+        "email": "amina@example.com",
+        "location": "Casablanca",
+        "experienceYears": 1,
+        "skills": [
+          "React",
+          "JS",
+          "HTML"
+        ],
+        "availabilityDate": "2025-10-01",
+        "stage": "SOURCED"
+      },
+      {
+        "firstName": "Youssef",
+        "lastName": "Benali",
+        "email": "youssef@example.com",
+        "location": "Casablanca",
+        "experienceYears": 2,
+        "skills": [
+          "React",
+          "JS",
+          "Git"
+        ],
+        "availabilityDate": "2025-09-20",
+        "stage": "SOURCED"
+      },
+      {
+        "firstName": "Issam",
+        "lastName": "Bouzid",
+        "email": "issam@example.com",
+        "location": "Casablanca",
+        "experienceYears": 1,
+        "skills": [
+          "JS",
+          "HTML",
+          "Git"
+        ],
+        "availabilityDate": "2025-09-30",
+        "stage": "SOURCED"
+      }
+    ]
+  },
+  {
+    "name": "FE-Intern-A",
+    "createdAt": "2025-09-15T10:35:04.972301",
+    "candidates": [
+      {
+        "firstName": "Fatima",
+        "lastName": "Z.",
+        "email": "fatima@example.com",
+        "location": "Casablanca",
+        "experienceYears": 3,
+        "skills": [
+          "React",
+          "Node",
+          "SQL"
+        ],
+        "availabilityDate": "2025-12-01",
+        "stage": "INTERVIEW"
+      },
+      {
+        "firstName": "Omar",
+        "lastName": "Said",
+        "email": "omar@example.com",
+        "location": "Tanger",
+        "experienceYears": 1,
+        "skills": [
+          "React",
+          "JS",
+          "CSS"
+        ],
+        "availabilityDate": "2025-09-14",
+        "stage": "SOURCED"
+      }
+    ]
+  },
+  {
+    "name": "FE-Intern-A",
+    "createdAt": "2025-09-15T11:24:02.001567",
+    "candidates": [
+      {
+        "firstName": "Amina",
+        "lastName": "El Idrissi",
+        "email": "amina@example.com",
+        "location": "Casablanca",
+        "experienceYears": 1,
+        "skills": [
+          "React",
+          "JS",
+          "HTML"
+        ],
+        "availabilityDate": "2025-10-01",
+        "stage": "SOURCED"
+      },
+      {
+        "firstName": "Khalid",
+        "lastName": "Othman",
+        "email": "khalid@example.com",
+        "location": "Casablanca",
+        "experienceYears": 0,
+        "skills": [
+          "React",
+          "TypeScript",
+          "Git"
+        ],
+        "availabilityDate": "2025-09-10",
+        "stage": "SOURCED"
+      }
+    ]
+  },
+  {
+    "name": "FE-Intern-A')",
+    "createdAt": "2025-09-15T12:02:44.290128",
+    "candidates": [
+      {
+        "firstName": "Amina",
+        "lastName": "El Idrissi",
+        "email": "amina@example.com",
+        "location": "Casablanca",
+        "experienceYears": 1,
+        "skills": [
+          "React",
+          "JS",
+          "HTML"
+        ],
+        "availabilityDate": "2025-10-01",
+        "stage": "SOURCED"
+      },
+      {
+        "firstName": "Issam",
+        "lastName": "Bouzid",
+        "email": "issam@example.com",
+        "location": "Casablanca",
+        "experienceYears": 1,
+        "skills": [
+          "JS",
+          "HTML",
+          "Git"
+        ],
+        "availabilityDate": "2025-09-30",
+        "stage": "SOURCED"
+      }
+    ]
+  },
+  {
+    "name": "FE-Intern-A')",
+    "createdAt": "2025-09-15T12:02:58.283564",
+    "candidates": []
+  },
+  {
+    "name": "FE-Intern-A",
+    "createdAt": "2025-09-15T12:20:33.007965",
+    "candidates": [
+      {
+        "firstName": "Youssef",
+        "lastName": "Benali",
+        "email": "youssef@example.com",
+        "location": "Casablanca",
+        "experienceYears": 2,
+        "skills": [
+          "React",
+          "JS",
+          "Git"
+        ],
+        "availabilityDate": "2025-09-20",
+        "stage": "SOURCED"
+      }
+    ]
+  },
+  {
+    "name": "FE-Intern-B",
+    "createdAt": "2025-09-15T12:34:29.992628",
+    "candidates": [
+      {
+        "firstName": "Sara",
+        "lastName": "El Khatib",
+        "email": "sara@example.com",
+        "location": "Rabat",
+        "experienceYears": 1,
+        "skills": [
+          "Vue",
+          "JS",
+          "HTML"
+        ],
+        "availabilityDate": "2025-09-01",
+        "stage": "SCREEN"
+      }
+    ]
+  }
+]
