@@ -120,7 +120,7 @@ This is a Python command-line interface (CLI) tool for managing candidates, shor
 ]
 ```
 
-### positions.json
+### jobs.json
 
 ```json
 [
