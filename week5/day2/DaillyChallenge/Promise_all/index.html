@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunrise Times</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        form {
+            display: grid;
+            gap: 10px;
+            max-width: 400px;
+            margin-bottom: 20px;
+        }
+        input {
+            padding: 5px;
+        }
+        button {
+            padding: 5px 10px;
+        }
+        #results {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sunrise Time Finder</h1>
+
+    <form id="sunrise-form">
+        <h3>City 1</h3>
+        <input type="number" step="any" id="lat1" placeholder="Latitude" required>
+        <input type="number" step="any" id="lng1" placeholder="Longitude" required>
+
+        <h3>City 2</h3>
+        <input type="number" step="any" id="lat2" placeholder="Latitude" required>
+        <input type="number" step="any" id="lng2" placeholder="Longitude" required>
+
+        <button type="submit">Get Sunrise Times</button>
+    </form>
+
+    <div id="results"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

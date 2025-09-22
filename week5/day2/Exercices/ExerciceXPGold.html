@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Exercice </title>
+</head>
+<body>
+  <h1>Random GIF</h1>
+  <div id="gif-container"></div>
+
+  <script>
+    async function fetchRandomGif() {
+      const apiKey = "hpvZycW22qCjn5cRM1xtWB8NKq4dQ2My";
+      const query = "funny"; 
+      const limit = 3; 
+      const url = `https://api.giphy.com/v1/gifs/search?q=${query}&limit=${limit}&rating=g&api_key=${apiKey}`;
+
+      try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+
+        const gifs = data.data;
+        const randomIndex = Math.floor(Math.random() * gifs.length);
+        const gifUrl = gifs[randomIndex].images.original.url;
+        const img = document.createElement('img');
+        img.src = gifUrl;
+        img.alt = "Random GIF";
+        img.style.maxWidth = "300px";
+        document.getElementById('gif-container').appendChild(img);
+
+      } catch (error) {
+        console.log('Error occurred:', error);
+      }
+    }
+
+    fetchRandomGif();
+  </script>
+</body>
+</html>

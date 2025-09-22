@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Giphy Fetcher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        #gifs-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .gif-item {
+            position: relative;
+            display: inline-block;
+        }
+        .gif-item img {
+            width: 200px;
+            height: auto;
+            display: block;
+        }
+        .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 2px 6px;
+            cursor: pointer;
+        }
+        #delete-all {
+            margin-top: 20px;
+            padding: 5px 10px;
+            background-color: #444;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Random Giphy Fetcher</h1>
+
+<form id="gif-form">
+    <input type="text" id="search-input" placeholder="Enter a category..." required>
+    <button type="submit">Fetch GIF</button>
+</form>
+
+<div id="gifs-container"></div>
+<button id="delete-all">DELETE ALL</button>
+
+<script src="script.js"></script>
+</body>
+</html>
