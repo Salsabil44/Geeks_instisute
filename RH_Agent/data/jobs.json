@@ -1,0 +1,5 @@
+[
+  {"title":"Frontend Intern","location":"Casablanca","skillsRequired":["React","JS","Git"],"jdSnippet":"We build UI with React and Git workflows."},
+  {"title":"Frontend Junior","location":"Casablanca","skillsRequired":["React","HTML","CSS"],"jdSnippet":"Focus on polished, responsive UI."},
+  {"title":"Data Analyst Intern","location":"Rabat","skillsRequired":["Python","SQL","Excel"],"jdSnippet":"Analyze data and generate reports."}
+]

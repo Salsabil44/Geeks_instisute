@@ -1,0 +1,36 @@
+[
+  {
+    "name": "FE-Intern-A",
+    "createdAt": "2025-09-23T10:02:38.974111",
+    "candidates": [
+      {
+        "firstName": "Amina",
+        "lastName": "El Idrissi",
+        "email": "amina@example.com",
+        "location": "Casablanca",
+        "experienceYears": 1,
+        "skills": [
+          "React",
+          "JS",
+          "HTML"
+        ],
+        "availabilityDate": "2025-10-01",
+        "stage": "SOURCED"
+      },
+      {
+        "firstName": "Khalid",
+        "lastName": "Othman",
+        "email": "khalid@example.com",
+        "location": "Casablanca",
+        "experienceYears": 0,
+        "skills": [
+          "React",
+          "TypeScript",
+          "Git"
+        ],
+        "availabilityDate": "2025-09-10",
+        "stage": "SOURCED"
+      }
+    ]
+  }
+]
