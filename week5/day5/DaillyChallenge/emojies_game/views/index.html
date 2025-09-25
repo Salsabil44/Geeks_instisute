@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Emoji Guessing Game</title>
+  <style>
+    body { font-family: Arial; text-align: center; margin-top: 50px; }
+    button { margin: 5px; padding: 10px 20px; font-size: 16px; }
+    #emoji { font-size: 100px; margin-bottom: 20px; }
+    #result { font-size: 24px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Emoji Guessing Game</h1>
+  <div id="emoji">🎲</div>
+  <div id="options"></div>
+  <p id="result"></p>
+
+  <script>
+    async function loadEmoji() {
+      const res = await fetch("/game");
+      const data = await res.json();
+
+      document.getElementById("emoji").textContent = data.emoji;
+
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+      document.getElementById("result").textContent = "";
+
+      data.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.onclick = async () => {
+          const res = await fetch("/guess", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ selected: opt, correct: data.answer })
+          });
+          const result = await res.json();
+          document.getElementById("result").textContent = result.message;
+          setTimeout(loadEmoji, 1000); 
+        };
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    loadEmoji();
+  </script>
+</body>
+</html>
