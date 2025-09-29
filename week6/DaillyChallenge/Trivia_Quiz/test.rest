@@ -1,0 +1,13 @@
+GET http://localhost:3000/quiz
+Accept: application/json
+
+###
+POST http://localhost:3000/quiz
+Content-Type: application/json
+
+{
+  "answer": "Paris"
+}
+###
+GET http://localhost:3000/quiz/score
+Accept: application/json
