@@ -1,3 +1,4 @@
+
 GET http://localhost:3000/posts
 
 ###
@@ -6,22 +7,20 @@ Content-Type: application/json
 
 {
   "title": "My second Post",
-  "content": "This is the content of my first post.",
-  "author": "John Doe"
+  "content": "This is the content of my first post."
 }
 
 ###
 GET http://localhost:3000/posts/1
 
 ###
-PUT http://localhost:3000/posts/1
+PUT http://localhost:3000/posts/2
 Content-Type: application/json
 
 {
-  "title": "Updated Post Title",
-  "content": "This is the updated content of my post.",
-  "author": "Jane Doe"
+  "title": "Updated  Title",
+  "content": "This is the updated content of my post."
 }
 
 ###
-DELETE http://localhost:3000/posts/1
+DELETE http://localhost:3000/posts/3
