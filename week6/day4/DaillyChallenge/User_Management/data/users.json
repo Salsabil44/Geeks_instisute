@@ -1,0 +1,11 @@
+[
+  {
+    "id": "b2f9985e-6ec2-4915-93fe-8ad443b07ccb",
+    "name": "aaa",
+    "lastName": "aaaaaaaaaaaa",
+    "email": "aaaaa@aagmail.com",
+    "username": "aaaaaaaaaaa",
+    "passwordHash": "$2a$10$Im7KpmG594iycoqEqe6hsOYRFhL3PQyCXKn31QIEfv9HVR4lQJ65S",
+    "createdAt": "2025-10-06T15:27:23.934Z"
+  }
+]

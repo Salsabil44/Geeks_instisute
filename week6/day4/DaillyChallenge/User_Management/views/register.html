@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register</title>
+</head>
+<body>
+  <h2>Register</h2>
+
+  <form id="registerForm">
+    <input name="name" placeholder="Name" required><br>
+    <input name="lastName" placeholder="Last Name" required><br>
+    <input name="email" type="email" placeholder="Email" required><br>
+    <input name="username" placeholder="Username" required><br>
+    <input name="password" type="password" placeholder="Password" required><br>
+    <button type="submit">Register</button>
+  </form>
+
+  <p id="message" style="font-weight: bold;"></p>
+
+  <p>Already have an account? <a href="login.html">Login</a></p>
+
+  <script>
+    const form = document.getElementById('registerForm');
+    const msg = document.getElementById('message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const res = await fetch('/api/users/register', { 
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const json = await res.json();
+        msg.textContent = json.message || json.error;
+        msg.style.color = res.ok ? 'green' : 'red';
+      } catch (err) {
+        msg.textContent = '⚠️ Server error!';
+        msg.style.color = 'red';
+      }
+    });
+  </script>
+</body>
+</html>
